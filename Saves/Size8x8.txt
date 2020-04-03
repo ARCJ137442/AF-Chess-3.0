@@ -1,0 +1,8 @@
+[BoardSize]
+8,8
+
+[PlayerCount]
+4
+
+[NowPlayer]
+1
