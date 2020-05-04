@@ -1,3 +1,5 @@
+# AF Chess 3.0
+
 # Build and Release Folders
 bin-debug/
 bin-release/
@@ -11,9 +13,9 @@ bin-release/
 *.gz
 
 # Windows:
-Thumbs.db
-ehthumbs.db
-Desktop.ini
+[Tt]humbs.db
+[Ee]hthumbs.db
+[Dd]esktop.ini
 
 # VS Code
 .vscode/
@@ -24,10 +26,23 @@ end
 *.stackdump
 git status
 
+# Test
+*pictures/
+
+# Executables
+*.air
+*.swf
+*.html
+*.ipa
+*.apk
+
 # Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
+asconfig.*
 
 # should NOT be excluded as they contain compiler settings and other important
 
-# Other files and folders
+# information for Eclipse / Flash Builder.
 .settings/
+
+# Other files and folders
 *.note
