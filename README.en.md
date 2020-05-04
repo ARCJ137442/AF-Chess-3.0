@@ -15,7 +15,7 @@
 * Press F1 to display additional information of the chess pieces [F1: mark all areas, Shift + F1: switch to English symbol display]
 * Press F2 to load the external board pattern [F2: Save to clipboard, Shift + F2: Load] (incomplete function)
 * Press F3 to reset the board pattern
-* Press F4 to display the game record [F4: switch display, Shift + F4: clear screen] (incomplete function)
+* Press F4 to display the game log [F4: switch display, Shift + F4: clear screen] (incomplete function)
 
 ## License
 * Plan to adopt *** MIT open source agreement ***

@@ -27,7 +27,7 @@ end
 git status
 
 # Test
-*pictures/
+[Pp]ictures/
 
 # Executables
 *.air
