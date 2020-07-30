@@ -1,9 +1,16 @@
 package ac3.Chess 
 {
 	//============Import All============//
+	import ac3.Chess.movement.ChessMoveCondition;
+	import ac3.Chess.movement.ChessMoveWay;
+	import ac3.Chess.movement.ChessWayPoint;
+	import ac3.Chess.movement.ChessWayPointGenerateType;
+	import ac3.Chess.movement.ChessWayPointGenerater;
+	import ac3.Chess.movement.ChessWayPointType;
+	import ac3.Chess.movement.WayPointGeneraterStraight;
 	import ac3.Common.*;
 	import ac3.Chess.*;
-	import ac3.Chess.Way.*;
+	import ac3.Chess.movement.*;
 	import ac3.Game.*;
 	import ac3.AI.*;
 	import ac3.AI.Functions.*;
@@ -216,193 +223,7 @@ package ac3.Chess
 			//Detect MovePlaces
 			wayLoop:for each(tempWay in moveWays)
 			{
-				/*//Deal With Special MoveWays<Not Use>
-				switch(tempWay)
-				{
-					//ALL_OF_BOARD
-					case ChessMoveWay.ALL_OF_BOARD:
-						result=result.concat(board.allWayPoints);
-						continue;
-						break;
-					//LINE&CANNON&THROUGH
-					case ChessMoveWay.SPECIAL_STRAIGHT_LINE_MOVE:
-					case ChessMoveWay.SPECIAL_STRAIGHT_LINE_ATTACK:
-					case ChessMoveWay.SPECIAL_STRAIGHT_CANNON_MOVE:
-					case ChessMoveWay.SPECIAL_STRAIGHT_CANNON_ATTACK:
-					case ChessMoveWay.SPECIAL_OBLIQUE_LINE_MOVE:
-					case ChessMoveWay.SPECIAL_OBLIQUE_LINE_ATTACK:
-					case ChessMoveWay.SPECIAL_OBLIQUE_CANNON_MOVE:
-					case ChessMoveWay.SPECIAL_OBLIQUE_CANNON_ATTACK:
-					case ChessMoveWay.SPECIAL_STRAIGHT_THROUGH:
-					case ChessMoveWay.SPECIAL_OBLIQUE_THROUGH:
-						//Set tempBoolean as the way is use for Attack
-						tempBoolean=ChessMoveWay.isLinedAttackSpecialWay(tempWay);
-						//Loop Of Every Line
-						for(j=0;j<4;j++)
-						{
-							//Set throughChessCount as the count of through Chesses
-							throughChessCount=0;
-							//Loop Per Line
-							for(i=1;i<=board.boardSizeX*board.boardSizeY;i++)
-							{
-								if(ChessMoveWay.isObliqueSpecialWay(tempWay))
-								{
-									//0,1:LU&LD
-									//2,3:RU&RD
-									mx=x+(j<2?-i:i);
-									my=y+(j%2==0?-i:i);
-								}
-								else
-								{
-									//0,1:Up&Down
-									//2,3:Left&Right
-									mx=x+(j>1?1:0)*(j%2==0?-i:i);
-									my=y+(j<2?1:0)*(j%2==0?-i:i);
-								}
-								if(!board.isInBoard(mx,my)) break;
-								//Set
-								tempChess=board.getChessAt(mx,my);
-								//Line
-								if(ChessMoveWay.isLineSpecialWay(tempWay))
-								{
-									if(ignoreChessOnCurrentWayPoint)
-									{
-										result.push(new ChessWayPoint(mx,my,ChessWayPointType.MOVE_AND_ATTACK))
-									}
-									else if(tempChess!=null)
-									{
-										if(tempBoolean&&checkConditionAt(chess,mx,my,owner,ChessMoveCondition.HAS_OTHER_CHESS))
-										{
-											result.push(new ChessWayPoint(mx,my,ChessWayPointType.ATTACK));
-										}
-										break;
-									}
-									else if(!tempBoolean)
-									{
-										result.push(new ChessWayPoint(mx,my,ChessWayPointType.MOVE_AND_ATTACK));
-									}
-								}
-								//Cannon
-								else if(ChessMoveWay.isCannonSpecialWay(tempWay))
-								{
-									if(tempChess!=null)
-									{
-										if(tempBoolean&&throughChessCount==1)
-										{
-											if(ignoreChessOnCurrentWayPoint||
-											   checkConditionAt(chess,mx,my,owner,ChessMoveCondition.HAS_OTHER_CHESS))
-											{
-												result.push(new ChessWayPoint(mx,my,ChessWayPointType.ATTACK));
-											}
-											if(!ignoreChessOnCurrentWayPoint) break;
-										}
-										throughChessCount++;
-									}
-									else if(!tempBoolean&&throughChessCount==1)
-									{
-										result.push(new ChessWayPoint(mx,my,ChessWayPointType.MOVE));
-									}
-								}
-								//Through
-								else if(ChessMoveWay.isThroughSpecialWay(tempWay))
-								{
-									if(tempChess!=null)
-									{
-										if(!checkConditionAt(chess,mx,my,owner,ChessMoveCondition.HAS_ENEMY_CHESS))
-										{
-											continue;
-										}
-										result.push(new ChessWayPoint(mx,my,ChessWayPointType.MOVE_THROUGH_CHESSES));
-										throughChessCount++;
-									}
-									else
-									{
-										result.push(new ChessWayPoint(mx,my,ChessWayPointType.MOVE_THROUGH_CHESSES));
-										break;
-									}
-								}
-								//Error
-								else
-								{
-									host.addLog("Chess/generateMovePlaces:Unknown Way In Line Special!");
-								}
-							}
-						}
-						continue;
-						break;
-					//GLOBAL_TELEPORT_REQUIRED_LEVEL
-					case ChessMoveWay.SPECIAL_GLOBAL_TELEPORT_REQUIRED_LEVEL:
-						if(chess.level<1) continue;
-						for each(tempPoint in board.allWayPoints)
-						{
-							if(!board.hasChessAt(tempPoint.x,tempPoint.y))
-							{
-								result.push(new ChessWayPoint(tempPoint.x,tempPoint.y,ChessWayPointType.TELEPORT));
-							}
-						}
-						continue;
-						break;
-					//SPECIAL_GLOBAL_SWAP
-					case ChessMoveWay.SPECIAL_GLOBAL_SWAP:
-						for each(tempChess in board.allChesses)
-						{
-							if(tempChess!=chess)
-							{
-								result.push(new ChessWayPoint(tempChess.boardX,tempChess.boardY,ChessWayPointType.SWAP));
-							}
-						}
-						continue;
-						break;
-					//SPECIAL_COPY_NEARBY_CHESS_WAYS
-					//SPECIAL_COPY_NEARBY_ALLY_CHESS_WAYS_BY_LEVEL
-					case ChessMoveWay.SPECIAL_COPY_NEARBY_CHESS_WAYS:
-					case ChessMoveWay.SPECIAL_COPY_NEARBY_ALLY_CHESS_WAYS_BY_LEVEL:
-						radius=tempWay==ChessMoveWay.SPECIAL_COPY_NEARBY_CHESS_WAYS?1:chess.level+1;
-						for(mx=-radius;mx<=radius;mx++)
-						{
-							for(my=-radius;my<=radius;my++)
-							{
-								//Detect
-								if(mx==0&&my==0) continue;
-								tempChess=board.getChessAt(x+mx,y+my);
-								if(tempChess==null||
-								   tempChess.moveWays.indexOf(ChessMoveWay.SPECIAL_COPY_NEARBY_CHESS_WAYS)>=0||
-								   tempChess.moveWays.indexOf(ChessMoveWay.SPECIAL_COPY_NEARBY_ALLY_CHESS_WAYS_BY_LEVEL)>=0||
-								   tempChess.moveWays.indexOf(ChessMoveWay.SPECIAL_COPY_ALL_CHESS_WAYS)>=0||
-								   tempWay==ChessMoveWay.SPECIAL_COPY_NEARBY_ALLY_CHESS_WAYS_BY_LEVEL&&
-								   tempChess.owner!=owner)
-								{
-									continue;
-								}
-								//Start Copy
-								result=result.concat(Chess.generateMovePlaces(chess,tempChess.moveWays,x,y,owner,ignoreChessOnCurrentWayPoint));
-							}
-						}
-						continue;
-						break;
-					//SPECIAL_COPY_ALL_CHESS_WAYS
-					case ChessMoveWay.SPECIAL_COPY_ALL_CHESS_WAYS:
-						for each(tempChess in chess.board.allChesses)
-						{
-							//Detect
-							if(tempChess==null||
-							   tempChess.moveWays.indexOf(ChessMoveWay.SPECIAL_COPY_NEARBY_CHESS_WAYS)>=0||
-							   tempChess.moveWays.indexOf(ChessMoveWay.SPECIAL_COPY_ALL_CHESS_WAYS)>=0)
-							{
-								continue;
-							}
-							//Start Copy
-							result=result.concat(Chess.generateMovePlaces(chess,tempChess.moveWays,x,y,owner,ignoreChessOnCurrentWayPoint));
-						}
-						continue;
-						break;
-					//SPECIAL_CHAIN_JUMP
-					case ChessMoveWay.SPECIAL_CHAIN_JUMP:
-						result=result.concat(generateChainJumpWayPoints(chess,x,y,owner));
-						continue;
-						break;
-				}*/
-				//Generate WayPoints
+				//Generater Generate WayPoints
 				generatedWayPointsInBoard=new Vector.<ChessWayPoint>;
 				if(tempWay.wayPointGeneraterCount>0)
 				{
@@ -410,6 +231,26 @@ package ac3.Chess
 					{
 						if(tempGenerater==null) continue;
 						tempGenerateFAPoint=tempGenerater.firstArgumentPoint;
+						//Class Check
+						if(tempGenerater is WayPointGeneraterStraight)
+						{
+							mx=chess.boardX+(tempGenerater as WayPointGeneraterStraight).startPoint.x;
+							my=chess.boardY+(tempGenerater as WayPointGeneraterStraight).startPoint.y;
+							while(board.isInBoard(mx,my))
+							{
+								generatedWayPointsInBoard.push(tempGenerateFAPoint.getCopyAndMargePosition(mx,my))
+								//Line Check
+								if((tempGenerater as WayPointGeneraterStraight).blockAtOnceChess&&
+								   checkConditionAt(chess,mx,my,owner,ChessMoveCondition.HAS_CHESS))
+								{
+									break;
+								}
+								mx+=(tempGenerater as WayPointGeneraterStraight).stepX;
+								my+=(tempGenerater as WayPointGeneraterStraight).stepY;
+							}
+							continue;
+						}
+						//Other General Type
 						switch(tempGenerater.generateType)
 						{
 							//ALL_OF_BOARD
@@ -1534,4 +1375,4 @@ package ac3.Chess
 			return result;
 		}
 	}
-}
+}

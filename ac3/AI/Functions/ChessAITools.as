@@ -1,9 +1,10 @@
 package ac3.AI.Functions 
 {
 	//AF Chess 3.0
+	import ac3.Chess.movement.ChessWayPoint;
 	import ac3.Common.*;
 	import ac3.Chess.*;
-	import ac3.Chess.Way.*;
+	import ac3.Chess.movement.*;
 	import ac3.Game.*;
 	import ac3.AI.*;
 	

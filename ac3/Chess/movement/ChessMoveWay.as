@@ -1,9 +1,9 @@
-package ac3.Chess.Way 
+package ac3.Chess.movement 
 {
 	//============Import All============//
 	import ac3.Common.*;
 	import ac3.Chess.*;
-	import ac3.Chess.Way.*;
+	import ac3.Chess.movement.*;
 	import ac3.Game.*;
 	
 	//Flash
@@ -42,104 +42,6 @@ package ac3.Chess.Way
 		public static const SPECIAL_CHAIN_JUMP:ChessMoveWay=new ChessMoveWay().appendGenereater(ChessWayPointGenerater.CHAIN_JUMP);
 		
 		//============Static Functions============//
-		//======Tool Functions======//
-		/*
-		public static function isStraightSpecialWay(way:ChessMoveWay):Boolean
-		{
-			switch(way)
-			{
-				case SPECIAL_STRAIGHT_LINE_MOVE:
-				case SPECIAL_STRAIGHT_LINE_ATTACK:
-				case SPECIAL_STRAIGHT_CANNON_MOVE:
-				case SPECIAL_STRAIGHT_CANNON_ATTACK:
-				case SPECIAL_STRAIGHT_THROUGH:
-					return true;
-			}
-			return false;
-		}
-		
-		public static function isObliqueSpecialWay(way:ChessMoveWay):Boolean
-		{
-			switch(way)
-			{
-				case SPECIAL_OBLIQUE_LINE_MOVE:
-				case SPECIAL_OBLIQUE_LINE_ATTACK:
-				case SPECIAL_OBLIQUE_CANNON_MOVE:
-				case SPECIAL_OBLIQUE_CANNON_ATTACK:
-				case SPECIAL_OBLIQUE_THROUGH:
-					return true;
-			}
-			return false;
-		}
-		
-		public static function isLineSpecialWay(way:ChessMoveWay):Boolean
-		{
-			switch(way)
-			{
-				case SPECIAL_STRAIGHT_LINE_MOVE:
-				case SPECIAL_STRAIGHT_LINE_ATTACK:
-				case SPECIAL_OBLIQUE_LINE_MOVE:
-				case SPECIAL_OBLIQUE_LINE_ATTACK:
-					return true;
-			}
-			return false;
-		}
-		
-		public static function isCannonSpecialWay(way:ChessMoveWay):Boolean
-		{
-			switch(way)
-			{
-				case SPECIAL_STRAIGHT_CANNON_MOVE:
-				case SPECIAL_STRAIGHT_CANNON_ATTACK:
-				case SPECIAL_OBLIQUE_CANNON_MOVE:
-				case SPECIAL_OBLIQUE_CANNON_ATTACK:
-					return true;
-			}
-			return false;
-		}
-		
-		public static function isThroughSpecialWay(way:ChessMoveWay):Boolean
-		{
-			switch(way)
-			{
-				case SPECIAL_STRAIGHT_THROUGH:
-				case SPECIAL_OBLIQUE_THROUGH:
-					return true;
-			}
-			return false;
-		}
-		
-		public static function isLinedAttackSpecialWay(way:ChessMoveWay):Boolean
-		{
-			switch(way)
-			{
-				case SPECIAL_STRAIGHT_LINE_ATTACK:
-				case SPECIAL_OBLIQUE_LINE_ATTACK:
-				case SPECIAL_STRAIGHT_CANNON_ATTACK:
-				case SPECIAL_OBLIQUE_CANNON_ATTACK:
-					return true;
-			}
-			return false;
-		}
-		
-		public static function isLinedSpecialWay(way:ChessMoveWay):Boolean
-		{
-			switch(way)
-			{
-				case SPECIAL_STRAIGHT_LINE_MOVE:
-				case SPECIAL_STRAIGHT_LINE_ATTACK:
-				case SPECIAL_STRAIGHT_CANNON_MOVE:
-				case SPECIAL_STRAIGHT_CANNON_ATTACK:
-				case SPECIAL_OBLIQUE_LINE_MOVE:
-				case SPECIAL_OBLIQUE_LINE_ATTACK:
-				case SPECIAL_OBLIQUE_CANNON_MOVE:
-				case SPECIAL_OBLIQUE_CANNON_ATTACK:
-				case SPECIAL_STRAIGHT_THROUGH:
-				case SPECIAL_OBLIQUE_THROUGH:
-					return true;
-			}
-			return false;
-		}*/
 		
 		//======Main Functions======//
 		protected static function classInit():void
@@ -154,20 +56,76 @@ package ac3.Chess.Way
 				switch(type)
 				{
 					case ChessType.S:
+						//I
 						ways.push(new ChessMoveWay(
 								new ChessWayPoint(1,0,ChessWayPointType.MOVE_AND_ATTACK),
 								new ChessWayPoint(-1,0,ChessWayPointType.MOVE_AND_ATTACK),
 								new ChessWayPoint(0,1,ChessWayPointType.MOVE_AND_ATTACK),
 								new ChessWayPoint(0,-1,ChessWayPointType.MOVE_AND_ATTACK)
 								));
+						//II
+						ways.push(new ChessMoveWay(
+									new ChessWayPoint(1,0,ChessWayPointType.CONDITION,null,ChessMoveCondition.HAS_CHESS)
+									).appendGenereater(
+									new WayPointGeneraterStraight(
+										null,new ChessWayPoint(2,0,ChessWayPointType.ATTACK),1,0
+										)
+									),new ChessMoveWay(
+									new ChessWayPoint(-1,0,ChessWayPointType.CONDITION,null,ChessMoveCondition.HAS_CHESS)
+									).appendGenereater(
+									new WayPointGeneraterStraight(
+										null,new ChessWayPoint(-2,0,ChessWayPointType.ATTACK),-1,0
+										)
+									),new ChessMoveWay(
+									new ChessWayPoint(0,1,ChessWayPointType.CONDITION,null,ChessMoveCondition.HAS_CHESS)
+									).appendGenereater(
+									new WayPointGeneraterStraight(
+										null,new ChessWayPoint(0,2,ChessWayPointType.ATTACK),0,1
+										)
+									),new ChessMoveWay(
+									new ChessWayPoint(0,-1,ChessWayPointType.CONDITION,null,ChessMoveCondition.HAS_CHESS)
+									).appendGenereater(
+									new WayPointGeneraterStraight(
+										null,new ChessWayPoint(0,-2,ChessWayPointType.ATTACK),0,-1
+										)
+									)
+								);
 						break;
 					case ChessType.D:
+						//I
 						ways.push(new ChessMoveWay(
 								new ChessWayPoint(1,1,ChessWayPointType.MOVE_AND_ATTACK),
 								new ChessWayPoint(-1,1,ChessWayPointType.MOVE_AND_ATTACK),
 								new ChessWayPoint(1,-1,ChessWayPointType.MOVE_AND_ATTACK),
 								new ChessWayPoint(-1,-1,ChessWayPointType.MOVE_AND_ATTACK)
 								));
+						//II
+						ways.push(new ChessMoveWay(
+									new ChessWayPoint(1,1,ChessWayPointType.CONDITION,null,ChessMoveCondition.HAS_CHESS)
+									).appendGenereater(
+									new WayPointGeneraterStraight(
+										null,new ChessWayPoint(2,2,ChessWayPointType.ATTACK),1,1
+										)
+									),new ChessMoveWay(
+									new ChessWayPoint(-1,1,ChessWayPointType.CONDITION,null,ChessMoveCondition.HAS_CHESS)
+									).appendGenereater(
+									new WayPointGeneraterStraight(
+										null,new ChessWayPoint(-2,2,ChessWayPointType.ATTACK),-1,1
+										)
+									),new ChessMoveWay(
+									new ChessWayPoint(1,-1,ChessWayPointType.CONDITION,null,ChessMoveCondition.HAS_CHESS)
+									).appendGenereater(
+									new WayPointGeneraterStraight(
+										null,new ChessWayPoint(2,-2,ChessWayPointType.ATTACK),1,-1
+										)
+									),new ChessMoveWay(
+									new ChessWayPoint(-1,-1,ChessWayPointType.CONDITION,null,ChessMoveCondition.HAS_CHESS)
+									).appendGenereater(
+									new WayPointGeneraterStraight(
+										null,new ChessWayPoint(-2,-2,ChessWayPointType.ATTACK),-1,-1
+										)
+									)
+								);
 						break;
 					case ChessType.Si:
 						//I
@@ -179,21 +137,17 @@ package ac3.Chess.Way
 								));
 						//II
 						ways.push(new ChessMoveWay(
-								new ChessWayPoint(3,0,ChessWayPointType.MOVE_AND_ATTACK),
-								new ChessWayPoint(2,0,ChessWayPointType.CONDITION,null,null,ChessMoveCondition.HAS_CHESS),
-								new ChessWayPoint(1,0,ChessWayPointType.CONDITION,null,ChessMoveCondition.HAS_CHESS)
-								),new ChessMoveWay(
-								new ChessWayPoint(-3,0,ChessWayPointType.MOVE_AND_ATTACK),
-								new ChessWayPoint(-2,0,ChessWayPointType.CONDITION,null,null,ChessMoveCondition.HAS_CHESS),
+								new ChessWayPoint(1,0,ChessWayPointType.MOVE),
 								new ChessWayPoint(-1,0,ChessWayPointType.CONDITION,null,ChessMoveCondition.HAS_CHESS)
 								),new ChessMoveWay(
-								new ChessWayPoint(0,3,ChessWayPointType.MOVE_AND_ATTACK),
-								new ChessWayPoint(0,2,ChessWayPointType.CONDITION,null,null,ChessMoveCondition.HAS_CHESS),
-								new ChessWayPoint(0,1,ChessWayPointType.CONDITION,null,ChessMoveCondition.HAS_CHESS)
+								new ChessWayPoint(-1,0,ChessWayPointType.MOVE),
+								new ChessWayPoint(1,0,ChessWayPointType.CONDITION,null,ChessMoveCondition.HAS_CHESS)
 								),new ChessMoveWay(
-								new ChessWayPoint(0,-3,ChessWayPointType.MOVE_AND_ATTACK),
-								new ChessWayPoint(0,-2,ChessWayPointType.CONDITION,null,null,ChessMoveCondition.HAS_CHESS),
+								new ChessWayPoint(0,1,ChessWayPointType.MOVE),
 								new ChessWayPoint(0,-1,ChessWayPointType.CONDITION,null,ChessMoveCondition.HAS_CHESS)
+								),new ChessMoveWay(
+								new ChessWayPoint(0,-1,ChessWayPointType.MOVE),
+								new ChessWayPoint(0,1,ChessWayPointType.CONDITION,null,ChessMoveCondition.HAS_CHESS)
 								));
 						break;
 					case ChessType.Di:
@@ -213,18 +167,19 @@ package ac3.Chess.Way
 								));
 						//II
 						ways.push(new ChessMoveWay(
-								new ChessWayPoint(1,0,ChessWayPointType.MOVE_AND_ATTACK),
-								new ChessWayPoint(-1,0,ChessWayPointType.CONDITION,null,ChessMoveCondition.HAS_CHESS)
+								new ChessWayPoint(1,1,ChessWayPointType.MOVE),
+								new ChessWayPoint(-1,-1,ChessWayPointType.CONDITION,null,ChessMoveCondition.HAS_CHESS)
 								),new ChessMoveWay(
-								new ChessWayPoint(-1,0,ChessWayPointType.MOVE_AND_ATTACK),
-								new ChessWayPoint(1,0,ChessWayPointType.CONDITION,null,ChessMoveCondition.HAS_CHESS)
+								new ChessWayPoint(-1,-1,ChessWayPointType.MOVE),
+								new ChessWayPoint(1,1,ChessWayPointType.CONDITION,null,ChessMoveCondition.HAS_CHESS)
 								),new ChessMoveWay(
-								new ChessWayPoint(0,1,ChessWayPointType.MOVE_AND_ATTACK),
-								new ChessWayPoint(0,-1,ChessWayPointType.CONDITION,null,ChessMoveCondition.HAS_CHESS)
+								new ChessWayPoint(-1,1,ChessWayPointType.MOVE),
+								new ChessWayPoint(1,-1,ChessWayPointType.CONDITION,null,ChessMoveCondition.HAS_CHESS)
 								),new ChessMoveWay(
-								new ChessWayPoint(0,-1,ChessWayPointType.MOVE_AND_ATTACK),
-								new ChessWayPoint(0,1,ChessWayPointType.CONDITION,null,ChessMoveCondition.HAS_CHESS)
+								new ChessWayPoint(1,-1,ChessWayPointType.MOVE),
+								new ChessWayPoint(-1,1,ChessWayPointType.CONDITION,null,ChessMoveCondition.HAS_CHESS)
 								));
+						//II
 						break
 					case ChessType.X:
 						ways.push(new ChessMoveWay().addPointSquare(-1,-1,1,1,ChessWayPointType.MOVE_AND_ATTACK));
@@ -748,7 +703,7 @@ package ac3.Chess.Way
 		}
 		
 		//============Instance Functions============//
-		public function copyForm(other:ChessMoveWay,clearSpecial:Boolean=false):ChessMoveWay
+		public function copyFrom(other:ChessMoveWay,clearSpecial:Boolean=false):ChessMoveWay
 		{
 			//Set
 			var i:uint;
@@ -774,7 +729,7 @@ package ac3.Chess.Way
 		
 		public function getCopy(clearSpecial:Boolean=false):ChessMoveWay
 		{
-			return new ChessMoveWay().copyForm(this,clearSpecial);
+			return new ChessMoveWay().copyFrom(this,clearSpecial);
 		}
 		
 		public function clearSpecials():void

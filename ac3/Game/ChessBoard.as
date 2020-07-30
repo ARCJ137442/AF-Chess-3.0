@@ -1,9 +1,11 @@
 package ac3.Game 
 {
 	//============Import All============//
+	import ac3.Chess.movement.ChessWayPoint;
+	import ac3.Chess.movement.ChessWayPointType;
 	import ac3.Common.*;
 	import ac3.Chess.*;
-	import ac3.Chess.Way.*;
+	import ac3.Chess.movement.*;
 	import ac3.Events.*;
 	import ac3.Game.*;
 	import ac3.Text.*;
@@ -749,7 +751,7 @@ package ac3.Game
 						setNewChess(vx,vy,owner,type);
 					}
 					break;
-				case ChessGameMode.DEFAULT:
+				case ChessGameMode.ELDER:
 				case ChessGameMode.RANDOM_II:
 					for(i=0;i<ChessBoard.CLASSIC_PATTERN_LENGTH;i++)
 					{

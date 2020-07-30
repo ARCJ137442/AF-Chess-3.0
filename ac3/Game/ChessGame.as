@@ -1,9 +1,12 @@
 package ac3.Game 
 {
 	//============Import All============//
+	import ac3.Chess.movement.ChessMoveCondition;
+	import ac3.Chess.movement.ChessWayPoint;
+	import ac3.Chess.movement.ChessWayPointType;
 	import ac3.Common.*;
 	import ac3.Chess.*;
-	import ac3.Chess.Way.*;
+	import ac3.Chess.movement.*;
 	import ac3.Events.*;
 	import ac3.Game.*;
 	import ac3.AI.*;
@@ -895,7 +898,7 @@ package ac3.Game
 					resetGameByMode(ChessGameMode.DEBUG);
 					break;
 				case KeyCode.R:
-					resetGameByMode(ChessGameMode.DEFAULT);
+					resetGameByMode(ChessGameMode.ELDER);
 					break;
 				case KeyCode.S:
 					resetGameByMode(ChessGameMode.SQUARES);
@@ -904,7 +907,11 @@ package ac3.Game
 					resetGameByMode(ChessGameMode.STRAIGHT);
 					break;
 				case KeyCode.B:
-					resetGameByMode(ChessGameMode.BONUS_STORM);
+					if(ctrl)
+					{
+						this.addLog("Rule: enableSpawnBonus = "+(this.rules.enableSpawnBonus=!this.rules.enableSpawnBonus));
+					}
+					else resetGameByMode(ChessGameMode.BONUS_STORM);
 					break;
 				case KeyCode.X:
 					resetGameByMode(ChessGameMode.X_STORM);

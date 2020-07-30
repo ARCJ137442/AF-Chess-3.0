@@ -1,9 +1,9 @@
-package ac3.Chess.Way 
+package ac3.Chess.movement 
 {
 	//AF Chess
 	import ac3.Common.*;
 	import ac3.Chess.*;
-	import ac3.Chess.Way.*;
+	import ac3.Chess.movement.*;
 	
 	//Flash
 	import flash.geom.Point;

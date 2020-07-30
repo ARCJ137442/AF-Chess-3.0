@@ -7,7 +7,7 @@ package ac3.Game
 	public class ChessGameMode 
 	{
 		//============Static Variables============//
-		public static const DEFAULT:ChessGameMode=new ChessGameMode("Default");
+		public static const ELDER:ChessGameMode=new ChessGameMode("Elder");
 		public static const DEBUG:ChessGameMode=new ChessGameMode("Debug",false);
 		public static const CLASSIC:ChessGameMode=new ChessGameMode("Classic",true,null,1/64);
 		public static const SQUARES:ChessGameMode=new ChessGameMode("Squares",true,"S");
@@ -29,7 +29,7 @@ package ac3.Game
 		
 		//Groups
 		public static const allTypes:Vector.<ChessGameMode>=new <ChessGameMode>[
-		DEFAULT,DEBUG,CLASSIC,SQUARES,BONUS_STORM,X_STORM,EPISODE,SWAP,MAGIC,ADVANCE,SURVIVAL,COPYFROM,DECENTRALIZED,SURVANCE,RANDOM_II,INFLUENCE,RANDOM_III];
+		ELDER,DEBUG,CLASSIC,SQUARES,BONUS_STORM,X_STORM,EPISODE,SWAP,MAGIC,ADVANCE,SURVIVAL,COPYFROM,DECENTRALIZED,SURVANCE,RANDOM_II,INFLUENCE,RANDOM_III];
 		
 		//Rules
 		public static const d_enableSpawnBonus:Boolean=true;

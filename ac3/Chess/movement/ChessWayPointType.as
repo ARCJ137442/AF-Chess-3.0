@@ -1,4 +1,4 @@
-package ac3.Chess.Way 
+package ac3.Chess.movement 
 {
 	//Class MoveWayPointType
 	public final class ChessWayPointType

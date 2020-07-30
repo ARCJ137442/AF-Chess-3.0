@@ -1,8 +1,8 @@
-package ac3.Chess.Way 
+package ac3.Chess.movement 
 {
 	import ac3.Common.*;
 	import ac3.Chess.*;
-	import ac3.Chess.Way.*;
+	import ac3.Chess.movement.*;
 	import ac3.Game.*;
 	
 	public class ChessWayPointGenerater
@@ -100,14 +100,14 @@ package ac3.Chess.Way
 		}
 		
 		//============Instance Functions============//
-		public function copyForm(other:ChessWayPointGenerater):ChessWayPointGenerater
+		public function copyFrom(other:ChessWayPointGenerater):ChessWayPointGenerater
 		{
 			this._argumentPoints=other._argumentPoints.concat();
 			this._generateType=other._generateType;
 			return this;
 		}
 		
-		public function deepCopyForm(other:ChessWayPointGenerater):ChessWayPointGenerater
+		public function deepCopyFrom(other:ChessWayPointGenerater):ChessWayPointGenerater
 		{
 			//Type
 			this._generateType=other._generateType;
@@ -122,7 +122,7 @@ package ac3.Chess.Way
 		
 		public function getCopy():ChessWayPointGenerater
 		{
-			return ChessWayPointGenerater.construct2(null,null).copyForm(this);
+			return ChessWayPointGenerater.construct2(null,null).copyFrom(this);
 		}
 		
 		public function changeType(type:ChessWayPointGenerateType):ChessWayPointGenerater
