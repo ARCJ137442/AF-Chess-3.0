@@ -33,7 +33,7 @@ package ac3.Game
 		public static const d_spawnerSpawnLifeUsingPerTrun:uint=1;
 		
 		//Bonus
-		public static const d_enableSpawnBonus:Boolean=false;
+		public static const d_enableSpawnBonus:Boolean=true;
 		public static const d_canSpawnBonusType:String=null;
 		public static const d_bonusSpawnChance:Number=1/32;
 		public static const d_bonusChessGroupSpawnChance:Number=1/5;

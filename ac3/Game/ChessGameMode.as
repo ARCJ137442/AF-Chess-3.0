@@ -9,7 +9,7 @@ package ac3.Game
 		//============Static Variables============//
 		public static const ELDER:ChessGameMode=new ChessGameMode("Elder");
 		public static const DEBUG:ChessGameMode=new ChessGameMode("Debug",false);
-		public static const CLASSIC:ChessGameMode=new ChessGameMode("Classic",true,null,1/64);
+		public static const CLASSIC:ChessGameMode=new ChessGameMode("Classic",false,null,1/64);
 		public static const SQUARES:ChessGameMode=new ChessGameMode("Squares",true,"S");
 		public static const STRAIGHT:ChessGameMode=new ChessGameMode("Straight",false,"S");
 		public static const BONUS_STORM:ChessGameMode=new ChessGameMode("BonusStorm",true,"null/Ra",1/24,1/32,8);
